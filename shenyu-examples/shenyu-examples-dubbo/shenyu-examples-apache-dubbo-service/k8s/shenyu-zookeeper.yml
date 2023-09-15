@@ -14,9 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: shenyu-ingress
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: shenyu-ingress
   labels:
     app: shenyu-zk
     all: shenyu-examples-dubbo
@@ -30,12 +37,13 @@ spec:
   strategy: {}
   template:
     metadata:
+      namespace: shenyu-ingress
       labels:
         app: shenyu-zk
         all: shenyu-examples-dubbo
     spec:
       containers:
-        - image: zookeeper:3.5
+        - image: zookeeper:latest
           name: shenyu-zk
           resources: {}
           ports:
@@ -55,6 +63,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: shenyu-zk
+  namespace: shenyu-ingress
   labels:
     app: shenyu-zk
     all: shenyu-examples-dubbo
