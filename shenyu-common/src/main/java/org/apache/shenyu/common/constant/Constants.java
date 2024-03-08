@@ -48,6 +48,16 @@ public interface Constants {
     String META_DATA = "metaData";
     
     /**
+     * The constant OLD_CONTEXT_PATH_META_DATA.
+     */
+    String OLD_CONTEXT_PATH_META_DATA = "old_context_path_meta_data";
+    
+    /**
+     * The constant OLD_META_DATA.
+     */
+    String OLD_META_DATA = "old_meta_data";
+    
+    /**
      * The constant CLIENT_RESPONSE_ATTR.
      */
     String CLIENT_RESPONSE_ATTR = "webHandlerClientResponse";
@@ -81,11 +91,6 @@ public interface Constants {
      * The constant MOTAN_RPC_RESULT_EMPTY.
      */
     String MOTAN_RPC_RESULT_EMPTY = "motan has not return value!";
-    
-    /**
-     * The constant BRPC_RPC_RESULT_EMPTY.
-     */
-    String BRPC_RPC_RESULT_EMPTY = "brpc has not return value!";
     
     /**
      * The constant CLIENT_RESPONSE_RESULT_TYPE.
@@ -233,10 +238,20 @@ public interface Constants {
     String REWRITE_URI = "rewrite_uri";
     
     /**
+     * The constant REWRITE_CONTEXT_PATH.
+     */
+    String REWRITE_CONTEXT_PATH = "rewrite_context_path";
+    
+    /**
      * The constant URI.
      */
     String URI = "uri";
-    
+
+    /**
+     * The constant header key of sign plugin version-2.
+     */
+    String SHENYU_AUTHORIZATION = "ShenYu-Authorization";
+
     /**
      * The constant LINE_SEPARATOR.
      */
@@ -366,6 +381,11 @@ public interface Constants {
      * jwt handle key for secretKey.
      */
     String SECRET_KEY = "secretKey";
+    
+    /**
+     * basicAuth handle key for defaultHandleJson.
+     */
+    String DEFAULT_HANDLE_JSON = "defaultHandleJson";
     
     /**
      * local key.
@@ -586,17 +606,27 @@ public interface Constants {
      * The constant API_DOC_TYPE.
      */
     String API_DOC_TYPE = "apiDoc";
-    
+
     /**
      * The constant API_DOC_PATH.
      */
     String API_DOC_PATH = "/shenyu-client/register-apiDoc";
-    
+
+    /**
+     * The constant DISCOVERY_CONFIG_TYPE.
+     */
+    String DISCOVERY_CONFIG_TYPE = "discovery";
+
+    /**
+     * The constant DISCOVERY_CONFIG_PATH.
+     */
+    String DISCOVERY_CONFIG_PATH = "/shenyu-client/register-discoveryConfig";
+
     /**
      * When register by http, the login path.
      */
     String LOGIN_PATH = "/platform/login";
-    
+
     /**
      * When register by http, admin username.
      */
@@ -611,7 +641,17 @@ public interface Constants {
      * When register by http, admin password.
      */
     String PASS_WORD = "password";
-    
+
+    /**
+     * key.
+     */
+    String AES_SECRET_KEY = "aes-secret-key";
+
+    /**
+     * iv.
+     */
+    String AES_SECRET_IV = "aes-secret-iv";
+
     /**
      * X-Access-Token.
      */
@@ -701,7 +741,9 @@ public interface Constants {
      * The maximum free memory reserved by the blocking queue for the JVM.
      */
     int THE_256_MB = 256 * 1024 * 1024;
-    
+
+    int BYTES_PER_MB = 1024 * 1024;
+
     /**
      * The default cluster of dubbo client.
      */
@@ -747,6 +789,16 @@ public interface Constants {
      * The constant DEFAULT_RULE.
      */
     String DEFAULT_RULE = "default_rule";
+
+    /**
+     * the plugin start time of plugin lifecycle.
+     */
+    String PLUGIN_START_TIME = "pluginStartTime:";
+
+    /**
+     * the plugin end time of plugin lifecycle.
+     */
+    String PLUGIN_END_TIME = "pluginEndTime:";
     
     /**
      * String q.

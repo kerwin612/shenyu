@@ -24,14 +24,17 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import javax.annotation.Resource;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.TimeZone;
 
 /**
  * abstract alert notify.
  */
 abstract class AbstractAlertNotifyHandler implements AlertNotifyHandler {
     protected static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    
+
     @Resource
     private TemplateEngine templateEngine;
     
@@ -42,8 +45,13 @@ abstract class AbstractAlertNotifyHandler implements AlertNotifyHandler {
         Context context = new Context();
         context.setVariable("title", "[ShenYu Alarm]");
         
+        context.setVariable("titleLabel", "Alarm Title");
+        context.setVariable("alarmTitle", alert.getTitle());
+        
         context.setVariable("triggerTimeLabel", "Alarm Time");
-        context.setVariable("triggerTime", DTF.format(alert.getDateCreated().toInstant()));
+        context.setVariable("triggerTime", DTF.format(LocalDateTime.ofInstant(
+                alert.getDateCreated() == null ? Instant.now() : alert.getDateCreated().toInstant(), 
+                TimeZone.getDefault().toZoneId())));
         
         context.setVariable("contentLabel", "Alarm Content");
         context.setVariable("content", alert.getContent());

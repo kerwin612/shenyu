@@ -17,16 +17,40 @@
 
 package org.apache.shenyu.plugin.base.alert;
 
+import org.apache.shenyu.common.config.ShenyuConfig;
 import org.apache.shenyu.common.dto.AlarmContent;
 import org.apache.shenyu.plugin.api.utils.SpringBeanUtils;
+
+import java.util.Date;
 import java.util.Map;
 
 /**
  * The alarm data sender.
+ * We can use <code>AlarmSender.alarm</code> to send alarm message.
+ * <pre>{@code 
+ * AlarmSender.alarm((byte) 0, "alarm-title", "alarm-content");
+ *
+ * Map<String, String> labels = new HashMap<>(8);
+ * labels.put("plugin", "http-redirect");
+ * labels.put("component", "http");
+ * labels.put("env", "prod");
+ * AlarmSender.alarmHighEmergency("alarm-title", "alarm-content", labels);
+ * AlarmSender.alarmMediumCritical("alarm-title", "alarm-content", labels);
+ * AlarmSender.alarmLowWarning("alarm-title", "alarm-content", labels);
+ * 
+ * Map<String, String> labels = new HashMap<>(8);
+ * labels.put("plugin", "cache");
+ * labels.put("component", "cache");
+ * labels.put("env", "test");
+ * AlarmSender.alarm((byte) 0, "alarm-title", "alarm-content", labels);
+ * }</pre>
+ * 
  */
 public class AlarmSender {
     
     private static AlarmService alarmService;
+    
+    private static Boolean enabled;
     
     /**
      * Send alarm content.
@@ -35,6 +59,10 @@ public class AlarmSender {
     public static void alarm(final AlarmContent alarmContent) {
         if (alarmService == null) {
             alarmService = SpringBeanUtils.getInstance().getBean(AlarmService.class);
+        }
+        if (enabled == null) {
+            ShenyuConfig shenyuConfig = SpringBeanUtils.getInstance().getBean(ShenyuConfig.class);
+            enabled = shenyuConfig.getAlert().getEnabled();
         }
         AlarmThreadPoolExecutor.getInstance().execute(() -> {
             alarmService.alarm(alarmContent); 
@@ -51,7 +79,7 @@ public class AlarmSender {
     public static void alarm(final byte level, final String title, final String content, final Map<String, String> labels) {
         AlarmContent alarmContent = new AlarmContent.Builder()
                                             .level(level).title(title).content(content)
-                                            .labels(labels).build();
+                                            .labels(labels).dateCreated(new Date()).build();
         alarm(alarmContent);
     }
     
@@ -64,7 +92,7 @@ public class AlarmSender {
     public static void alarm(final byte level, final String title, final String content) {
         AlarmContent alarmContent = new AlarmContent.Builder()
                                             .level(level).title(title)
-                                            .content(content).build();
+                                            .content(content).dateCreated(new Date()).build();
         alarm(alarmContent);
     }
     
@@ -77,7 +105,7 @@ public class AlarmSender {
     public static void alarmHighEmergency(final String title, final String content, final Map<String, String> labels) {
         AlarmContent alarmContent = new AlarmContent.Builder()
                                             .level((byte) 0).title(title).content(content)
-                                            .labels(labels).build();
+                                            .labels(labels).dateCreated(new Date()).build();
         alarm(alarmContent);
     }
     
@@ -90,7 +118,7 @@ public class AlarmSender {
     public static void alarmMediumCritical(final String title, final String content, final Map<String, String> labels) {
         AlarmContent alarmContent = new AlarmContent.Builder()
                                             .level((byte) 1).title(title).content(content)
-                                            .labels(labels).build();
+                                            .labels(labels).dateCreated(new Date()).build();
         alarm(alarmContent);
     }
     
@@ -103,7 +131,7 @@ public class AlarmSender {
     public static void alarmLowWarning(final String title, final String content, final Map<String, String> labels) {
         AlarmContent alarmContent = new AlarmContent.Builder()
                                             .level((byte) 2).title(title).content(content)
-                                            .labels(labels).build();
+                                            .labels(labels).dateCreated(new Date()).build();
         alarm(alarmContent);
     }
 }
