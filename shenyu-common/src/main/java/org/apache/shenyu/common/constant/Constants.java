@@ -801,9 +801,34 @@ public interface Constants {
     String PLUGIN_END_TIME = "pluginEndTime:";
 
     /**
+     * the chain start time of chain lifecycle.
+     */
+    String CHAIN_START_TIME = "chainStartTime:";
+
+    /**
+     * the chain end time of chain lifecycle.
+     */
+    String CHAIN_END_TIME = "chainEndTime:";
+
+    /**
      * ratelimiter plugin metrics.
      */
     String METRICS_RATE_LIMITER = "metricsRateLimiter";
+
+    /**
+     * sentinel plugin metrics.
+     */
+    String METRICS_SENTINEL = "metricsSentinel";
+
+    /**
+     * resilience4j plugin metrics.
+     */
+    String METRICS_RESILIENCE4J = "metricsResilience4j";
+
+    /**
+     * Hystrix plugin metrics.
+     */
+    String METRICS_HYSTRIX = "metricsHystrix";
 
     /**
      * String q.
